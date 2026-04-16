@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Algorithms Application</title>
+<style>
+    body{
+        font-family:Arial, sans-serif;
+        background:linear-gradient(135deg,#e3f2fd,#f3e5f5);
+        margin:0;
+        padding:0;
+    }
+    h1{
+        text-align:center;
+        margin:20px 0 10px;
+    }
+    .subtitle{
+        text-align:center;
+        color:#555;
+        margin-bottom:15px;
+        font-size:14px;
+    }
+    .top-nav{
+        position:sticky;
+        top:0;
+        z-index:10;
+        background:rgba(255,255,255,0.9);
+        box-shadow:0 1px 6px rgba(0,0,0,.08);
+        padding:8px 12px;
+        display:flex;
+        justify-content:center;
+        gap:8px;
+        backdrop-filter:blur(6px);
+    }
+    .nav-btn{
+        padding:6px 10px;
+        border-radius:16px;
+        border:1px solid #90caf9;
+        background:#e3f2fd;
+        color:#1565c0;
+        font-size:12px;
+        cursor:pointer;
+        transition:all .2s;
+    }
+    .nav-btn:hover{
+        background:#bbdefb;
+    }
+    .nav-btn.active{
+        background:#1565c0;
+        color:#fff;
+        border-color:#1565c0;
+    }
+    .page{
+        padding:20px;
+        max-width:980px;
+        margin:0 auto 40px;
+    }
+    .section{
+        background:white;
+        padding:20px;
+        margin:20px auto;
+        border-radius:14px;
+        box-shadow:0 2px 12px rgba(0,0,0,.12);
+        transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .section:hover{
+        transform:translateY(-2px);
+        box-shadow:0 4px 16px rgba(0,0,0,.18);
+    }
+    .section h2{
+        margin-top:0;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        font-size:18px;
+    }
+    .badge{
+        background:#e8f5e9;
+        color:#2e7d32;
+        border-radius:12px;
+        padding:3px 8px;
+        font-size:11px;
+    }
+    .inputs-row{
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-top:6px;
+    }
+    input{
+        padding:8px 10px;
+        border-radius:6px;
+        border:1px solid #cfd8dc;
+        flex:1 1 150px;
+        min-width:120px;
+        transition:border-color .2s, box-shadow .2s;
+    }
+    input:focus{
+        outline:none;
+        border-color:#42a5f5;
+        box-shadow:0 0 0 2px rgba(66,165,245,.25);
+    }
+    button{
+        padding:8px 14px;
+        margin-top:10px;
+        border:none;
+        border-radius:18px;
+        background:#2e7d32;
+        color:white;
+        cursor:pointer;
+        font-size:13px;
+        margin-right:6px;
+        transition:background .2s, transform .1s, box-shadow .1s;
+    }
+    button.secondary{
+        background:#546e7a;
+    }
+    button:hover{
+        background:#1b5e20;
+        box-shadow:0 2px 6px rgba(0,0,0,.18);
+    }
+    button.secondary:hover{
+        background:#37474f;
+    }
+    button:active{
+        transform:scale(.97);
+    }
+    .result{
+        margin-top:10px;
+        font-weight:bold;
+        min-height:20px;
+        color:#1b5e20;
+        opacity:0;
+        transform:translateY(4px);
+        transition:opacity .2s ease, transform .2s ease;
+    }
+    .result.visible{
+        opacity:1;
+        transform:translateY(0);
+    }
+    table{
+        border-collapse:collapse;
+        width:100%;
+        margin-top:10px;
+        font-size:13px;
+    }
+    th,td{
+        border:1px solid #ccc;
+        padding:6px 8px;
+        text-align:center;
+    }
+    th{
+        background:#f1f8e9;
+    }
+    .table-wrapper{
+        max-height:260px;
+        overflow:auto;
+        margin-top:8px;
+        border-radius:8px;
+        border:1px solid #e0e0e0;
+    }
+    .hint{
+        font-size:11px;
+        color:#777;
+        margin-top:4px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Algorithm Demonstration Portal</h1>
+<div class="subtitle">Try the different tasks, sort/search the data, and watch the results update instantly.</div>
+
+<div class="top-nav">
+    <button class="nav-btn active" onclick="scrollToSection('task1', this)">Merge Sort</button>
+    <button class="nav-btn" onclick="scrollToSection('task2', this)">Binary Search</button>
+    <button class="nav-btn" onclick="scrollToSection('task3', this)">Inventory</button>
+    <button class="nav-btn" onclick="scrollToSection('task4', this)">Patients</button>
+    <button class="nav-btn" onclick="scrollToSection('task5', this)">Results</button>
+    <button class="nav-btn" onclick="scrollToSection('task6', this)">Orders</button>
+</div>
+
+<div class="page">
+
+<!-- TASK 1 MERGE SORT -->
+<div class="section" id="task1">
+    <h2>
+        Task 1 — Merge Sort
+        <span class="badge">Divide & Conquer</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="mergeInput" placeholder="Enter numbers e.g. 8, 3, 5, 2, 9">
+    </div>
+    <div class="hint">Tip: Separate numbers with commas or spaces.</div>
+    <button onclick="runMergeSort()">Sort Numbers</button>
+    <button class="secondary" onclick="clearField('mergeInput','mergeOutput')">Clear</button>
+    <div class="result" id="mergeOutput"></div>
+</div>
+
+<!-- TASK 2 BINARY SEARCH -->
+<div class="section" id="task2">
+    <h2>
+        Task 2 — Binary Search
+        <span class="badge">Searching</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="searchArray" placeholder="Sorted numbers e.g. 1 3 5 7 9">
+        <input id="searchTarget" placeholder="Target value e.g. 7">
+    </div>
+    <div class="hint">Array must be sorted for binary search to work correctly.</div>
+    <button onclick="runBinarySearch()">Search</button>
+    <button class="secondary" onclick="clearBinary()">Clear</button>
+    <div class="result" id="searchOutput"></div>
+</div>
+
+<!-- TASK 3 INVENTORY -->
+<div class="section" id="task3">
+    <h2>
+        Task 3 — Inventory System
+        <span class="badge" id="invCountBadge">0 items</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="invName" placeholder="Product Name">
+        <input id="invPrice" placeholder="Price">
+        <input id="invQty" placeholder="Quantity">
+    </div>
+    <button onclick="addProduct()">Add Product</button>
+    <button class="secondary" onclick="sortPrice()">Sort by Price</button>
+    <button class="secondary" onclick="sortQty()">Sort by Quantity</button>
+    <div class="inputs-row" style="margin-top:10px;">
+        <input id="searchProductInput" placeholder="Search by product name">
+        <button onclick="searchProduct()">Search</button>
+        <button class="secondary" onclick="showAllInventory()">Show All</button>
+    </div>
+    <div class="table-wrapper">
+        <div id="inventoryTable"></div>
+    </div>
+</div>
+
+<!-- TASK 4 PATIENT -->
+<div class="section" id="task4">
+    <h2>
+        Task 4 — Hospital Patients
+        <span class="badge" id="patientCountBadge">0 patients</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="pName" placeholder="Name">
+        <input id="pSeverity" placeholder="Severity (1–10)">
+        <input id="pBill" placeholder="Bill Amount">
+    </div>
+    <button onclick="addPatient()">Add Patient</button>
+    <button class="secondary" onclick="sortSeverity()">Sort by Severity (High→Low)</button>
+    <button class="secondary" onclick="sortBill()">Sort by Bill (High→Low)</button>
+    <div class="table-wrapper">
+        <div id="patientTable"></div>
+    </div>
+</div>
+
+<!-- TASK 5 RESULTS -->
+<div class="section" id="task5">
+    <h2>
+        Task 5 — Student Results
+        <span class="badge" id="studentCountBadge">0 students</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="sName" placeholder="Student Name">
+        <input id="sMarks" placeholder="Marks">
+    </div>
+    <button onclick="addStudent()">Add Student</button>
+    <button class="secondary" onclick="sortMarks()">Generate Rank List</button>
+    <div class="table-wrapper">
+        <div id="studentTable"></div>
+    </div>
+</div>
+
+<!-- TASK 6 ORDERS -->
+<div class="section" id="task6">
+    <h2>
+        Task 6 — Food Orders
+        <span class="badge" id="orderCountBadge">0 orders</span>
+    </h2>
+    <div class="inputs-row">
+        <input id="oName" placeholder="Restaurant">
+        <input id="oTime" placeholder="Delivery Time (mins)">
+        <input id="oPrice" placeholder="Price">
+    </div>
+    <button onclick="addOrder()">Add Order</button>
+    <button class="secondary" onclick="sortTime()">Sort by Time</button>
+    <button class="secondary" onclick="sortOrderPrice()">Sort by Price</button>
+    <div class="table-wrapper">
+        <div id="orderTable"></div>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+/* ---------------- NAV INTERACTION ---------------- */
+function scrollToSection(id, btn){
+    const section=document.getElementById(id);
+    if(section){
+        section.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+    if(btn){btn.classList.add("active");}
+}
+
+/* ---------------- COMMON HELPERS ---------------- */
+function parseNums(id){
+    return document.getElementById(id).value
+        .split(/[ ,]+/)
+        .filter(x=>x)
+        .map(Number);
+}
+function renderTable(data,container){
+    if(!data.length){
+        container.innerHTML="No Data";
+        return;
+    }
+    let keys=Object.keys(data[0]);
+    let html="<table><tr>";
+    keys.forEach(k=>html+=`<th>${k}</th>`);
+    html+="</tr>";
+    data.forEach(o=>{
+        html+="<tr>";
+        keys.forEach(k=>html+=`<td>${o[k]}</td>`);
+        html+="</tr>";
+    });
+    html+="</table>";
+    container.innerHTML=html;
+}
+function showResult(id,text){
+    const el=document.getElementById(id);
+    el.innerText=text;
+    el.classList.add("visible");
+}
+function clearField(inputId,resultId){
+    document.getElementById(inputId).value="";
+    if(resultId){
+        const el=document.getElementById(resultId);
+        el.innerText="";
+        el.classList.remove("visible");
+    }
+}
+
+/* ---------------- MERGE SORT ---------------- */
+function merge_sort(arr){
+    if(arr.length<=1) return arr;
+    let mid=Math.floor(arr.length/2);
+    return merge(
+        merge_sort(arr.slice(0,mid)),
+        merge_sort(arr.slice(mid))
+    );
+}
+function merge(a,b){
+    let r=[],i=0,j=0;
+    while(i<a.length && j<b.length)
+        r.push(a[i]<b[j]?a[i++]:b[j++]);
+    return r.concat(a.slice(i)).concat(b.slice(j));
+}
+function runMergeSort(){
+    let arr=parseNums("mergeInput");
+    if(!arr.length){
+        showResult("mergeOutput","Please enter at least one number.");
+        return;
+    }
+    showResult("mergeOutput","Sorted: "+merge_sort(arr).join(", "));
+}
+
+/* ---------------- BINARY SEARCH ---------------- */
+function binary_search(arr,target){
+    let l=0,r=arr.length-1;
+    while(l<=r){
+        let mid=Math.floor((l+r)/2);
+        if(arr[mid]===target) return mid;
+        arr[mid]<target? l=mid+1:r=mid-1;
+    }
+    return -1;
+}
+function runBinarySearch(){
+    let arr=parseNums("searchArray");
+    let tStr=document.getElementById("searchTarget").value;
+    if(!arr.length || tStr===""){
+        showResult("searchOutput","Enter both the sorted array and a target value.");
+        return;
+    }
+    let t=Number(tStr);
+    let i=binary_search(arr,t);
+    showResult("searchOutput", i>=0 ? "Found at index "+i : "Not found");
+}
+function clearBinary(){
+    document.getElementById("searchArray").value="";
+    document.getElementById("searchTarget").value="";
+    const el=document.getElementById("searchOutput");
+    el.innerText="";
+    el.classList.remove("visible");
+}
+
+/* ---------------- INVENTORY ---------------- */
+let inventory=[];
+function updateInvBadge(){
+    document.getElementById("invCountBadge").innerText=inventory.length+" items";
+}
+function addProduct(){
+    const name=document.getElementById("invName").value.trim();
+    const price=+document.getElementById("invPrice").value;
+    const qty=+document.getElementById("invQty").value;
+    if(!name || isNaN(price) || isNaN(qty)){
+        alert("Please enter valid name, price and quantity.");
+        return;
+    }
+    inventory.push({name,price,qty});
+    updateInvBadge();
+    renderTable(inventory,document.getElementById("inventoryTable"));
+}
+function sortPrice(){
+    inventory.sort((a,b)=>a.price-b.price);
+    renderTable(inventory,document.getElementById("inventoryTable"));
+}
+function sortQty(){
+    inventory.sort((a,b)=>a.qty-b.qty);
+    renderTable(inventory,document.getElementById("inventoryTable"));
+}
+function searchProduct(){
+    const s=document.getElementById("searchProductInput").value.toLowerCase();
+    const res=inventory.filter(p=>p.name.toLowerCase().includes(s));
+    renderTable(res,document.getElementById("inventoryTable"));
+}
+function showAllInventory(){
+    renderTable(inventory,document.getElementById("inventoryTable"));
+}
+
+/* ---------------- PATIENT ---------------- */
+let patients=[];
+function updatePatientBadge(){
+    document.getElementById("patientCountBadge").innerText=patients.length+" patients";
+}
+function addPatient(){
+    const name=document.getElementById("pName").value.trim();
+    const severity=+document.getElementById("pSeverity").value;
+    const bill=+document.getElementById("pBill").value;
+    if(!name || isNaN(severity) || isNaN(bill)){
+        alert("Please enter valid name, severity and bill amount.");
+        return;
+    }
+    patients.push({name,severity,bill});
+    updatePatientBadge();
+    renderTable(patients,document.getElementById("patientTable"));
+}
+function sortSeverity(){
+    patients.sort((a,b)=>b.severity-a.severity);
+    renderTable(patients,document.getElementById("patientTable"));
+}
+function sortBill(){
+    patients.sort((a,b)=>b.bill-a.bill);
+    renderTable(patients,document.getElementById("patientTable"));
+}
+
+/* ---------------- STUDENTS ---------------- */
+let students=[];
+function updateStudentBadge(){
+    document.getElementById("studentCountBadge").innerText=students.length+" students";
+}
+function addStudent(){
+    const name=document.getElementById("sName").value.trim();
+    const marks=+document.getElementById("sMarks").value;
+    if(!name || isNaN(marks)){
+        alert("Please enter valid name and marks.");
+        return;
+    }
+    students.push({name,marks});
+    updateStudentBadge();
+    renderTable(students,document.getElementById("studentTable"));
+}
+function sortMarks(){
+    students.sort((a,b)=>b.marks-a.marks);
+    renderTable(students,document.getElementById("studentTable"));
+}
+
+/* ---------------- ORDERS ---------------- */
+let orders=[];
+function updateOrderBadge(){
+    document.getElementById("orderCountBadge").innerText=orders.length+" orders";
+}
+function addOrder(){
+    const restaurant=document.getElementById("oName").value.trim();
+    const time=+document.getElementById("oTime").value;
+    const price=+document.getElementById("oPrice").value;
+    if(!restaurant || isNaN(time) || isNaN(price)){
+        alert("Please enter valid restaurant, time and price.");
+        return;
+    }
+    orders.push({restaurant,time,price});
+    updateOrderBadge();
+    renderTable(orders,document.getElementById("orderTable"));
+}
+function sortTime(){
+    orders.sort((a,b)=>a.time-b.time);
+    renderTable(orders,document.getElementById("orderTable"));
+}
+function sortOrderPrice(){
+    orders.sort((a,b)=>a.price-b.price);
+    renderTable(orders,document.getElementById("orderTable"));
+}
+
+</script>
+
+</body>
+</html>
