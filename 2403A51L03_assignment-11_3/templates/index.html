@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Manager - Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1>Contact Manager</h1>
+        <p class="subtitle">
+          Compare <strong>Array</strong> vs <strong>Linked List</strong> implementations in a web UI.
+        </p>
+      </header>
+
+      <section class="controls">
+        <div class="card">
+          <h2>Implementation</h2>
+          <div class="implementation-toggle">
+            <label>
+              <input
+                type="radio"
+                name="implementation"
+                value="array"
+                checked
+              />
+              Array-based (Python list)
+            </label>
+            <label>
+              <input type="radio" name="implementation" value="linked" />
+              Linked List-based
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Add / Update Contact</h2>
+          <form id="contact-form">
+            <div class="field-group">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+            <div class="field-group">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="text" required />
+            </div>
+            <button type="submit" class="primary-button">Save Contact</button>
+          </form>
+          <p class="hint">
+            If a contact with the same name exists, its phone number will be updated.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Search / Delete</h2>
+          <div class="field-group inline">
+            <input
+              id="search-name"
+              type="text"
+              placeholder="Enter name to search or delete"
+            />
+            <button id="search-btn" class="secondary-button">Search</button>
+            <button id="delete-btn" class="danger-button">Delete</button>
+          </div>
+          <div id="search-result" class="search-result"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>All Contacts</h2>
+          <button id="refresh-btn" class="secondary-button small">
+            Refresh
+          </button>
+        </div>
+        <div id="contacts-empty" class="empty-state hidden">
+          No contacts yet for this implementation. Add one above.
+        </div>
+        <table id="contacts-table" class="contacts-table hidden">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <footer class="app-footer">
+        <span>Built on top of your lab contact manager code.</span>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+
